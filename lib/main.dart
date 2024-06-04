@@ -1,5 +1,6 @@
 
 import 'package:etourism_app/Screens/splash.screen.dart';
+import 'package:etourism_app/provider/auth.provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -16,7 +17,7 @@ class ETourismApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        // ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
       ],
       child: ScreenUtilInit(
         child: MaterialApp(
