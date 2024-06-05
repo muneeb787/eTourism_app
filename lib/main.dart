@@ -1,9 +1,14 @@
 
 import 'package:etourism_app/Screens/splash.screen.dart';
 import 'package:etourism_app/provider/auth.provider.dart';
+import 'package:etourism_app/provider/welcome.provider.dart';
+import 'package:etourism_app/screens/authentication.screen.dart';
+import 'package:etourism_app/screens/select_auth.screen.dart';
+import 'package:etourism_app/screens/welcome.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+
 
 void main() {
   runApp(const ETourismApp());
@@ -18,10 +23,11 @@ class ETourismApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => WelcomeProvider()),
       ],
       child: ScreenUtilInit(
         child: MaterialApp(
-          title: 'Alcert Certification',
+          title: 'E-Tourism',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
             primaryColor: const Color.fromRGBO(28, 33, 41, 1.0),
@@ -44,6 +50,10 @@ class ETourismApp extends StatelessWidget {
           routes: {
             // When navigating to the "/" route, build the FirstScreen widget.
             '/': (context) => const SplashScreen(),
+            WelcomeScreen.pageName: (context) => const WelcomeScreen(),
+            SelectAuthentication.pageName: (context) => const SelectAuthentication(),
+
+            AuthenticationScreen.pageName: (context) => const AuthenticationScreen(),
           },
         ),
       ),

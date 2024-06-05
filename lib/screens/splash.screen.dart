@@ -1,7 +1,8 @@
 import 'dart:async';
-
+import 'package:etourism_app/screens/welcome.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -13,13 +14,14 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-    // Timer(
-    //     // const Duration(seconds: 4),
-    //     //     () => Navigator.pushReplacementNamed(
-    //     //     context, WelcomeScreen.pageName)
-    // );
+    Timer(
+        const Duration(seconds: 2),
+            () => Navigator.pushReplacementNamed(
+            context, WelcomeScreen.pageName)
+    );
   }
 
+  @override
   Widget build(BuildContext context) {
     // final provider = Provider.of<SplashProvider>(context);
     // provider.checkLogin(context);
@@ -35,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Padding(
             padding: EdgeInsets.all(40.0.w),
             child: const Image(
-              image: AssetImage('assets/images/logo.png'),
+              image: AssetImage('assets/images/Travel Logo.png'),
             ),
           ),
         ),

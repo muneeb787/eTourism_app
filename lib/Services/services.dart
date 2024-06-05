@@ -14,7 +14,7 @@ var headers = <String, String>{
 };
 
 class Services {
-  final String _baseUrl = "https://alcert.org";
+  final String _baseUrl = "https://etourismapp-backend.onrender.com/";
 
   Future<void> loginUser({
     required String email,
@@ -25,7 +25,7 @@ class Services {
     print("object");
     try {
       var response = await http.post(
-        Uri.parse(_baseUrl + "/api/login"),
+        Uri.parse(_baseUrl + "/user/login"),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({
           "email": email,
@@ -49,25 +49,20 @@ class Services {
     required String password,
     required Function(User user, String token, String message) onSuccess,
     required Function(String e) onError,
-    required String name,
+
     required String username,
-    required String type,
-    required String password_confirmation,
-    required String registerationNo,
+
   }) async {
     print("object");
     try {
       var response = await http.post(
-        Uri.parse(_baseUrl + "/api/register"),
+        Uri.parse(_baseUrl + "/user"),
         headers: headers,
         body: jsonEncode({
-          'name': name,
           'email': email,
           'username': username,
-          'type': type,
           'password': password,
-          'password_confirmation': password_confirmation,
-          'registration_no': registerationNo,
+
         }),
       );
       print('asdasdasd ${response.statusCode}');

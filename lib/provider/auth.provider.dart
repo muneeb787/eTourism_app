@@ -10,7 +10,7 @@ class AuthProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   bool get isButtonLoading => _isButtonLoading;
 
-  bool _isLoading = false;
+  final bool _isLoading = false;
   bool _isButtonLoading = false;
 
   late String error;
@@ -32,7 +32,7 @@ class AuthProvider with ChangeNotifier {
         SharedPrefs.instance.saveUserToSharedPreferences(user);
         final userData =
             await SharedPrefs.instance.getUserFromSharedPreferences();
-        print("userData: ${userData}");
+        print("userData: $userData");
         SharedPrefs.instance.setToken(token: token);
         CustomToast().toastMessage(
             errorMsg: "Login Successfully", bgColor: Colors.green);
@@ -53,28 +53,25 @@ class AuthProvider with ChangeNotifier {
     required String email,
     required String password,
     required BuildContext context,
-    required String name,
     required String username,
-    required String type,
-    required String password_confirmation,
-    required String registerationNo,
+
+
   }) async {
     error = '';
     _isButtonLoading = true;
     notifyListeners();
     await _service.registerUser(
-      name: name,
+
       email: email,
       username: username,
-      type: type,
+
       password: password,
-      password_confirmation: password_confirmation,
-      registerationNo: registerationNo,
+
       onSuccess: (user, token , message) async {
         print("authProvider $user");
         SharedPrefs.instance.saveUserToSharedPreferences(user);
         final userData = await SharedPrefs.instance.getUserFromSharedPreferences();
-        print("userData: ${userData}");
+        print("userData: $userData");
         SharedPrefs.instance.setToken(token: token);
         CustomToast().toastMessage(
             errorMsg: message, bgColor: Colors.green);
