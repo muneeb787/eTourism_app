@@ -1,27 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-AppBar CustomAppbar() {
-  return AppBar(
-    // centerTitle: true,
-    leading: Container(),
-    elevation: 0.0,
-    backgroundColor: const Color(0xFF1C2129),
-    title: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Image.asset(
-          'assets/images/onlylogo.png',
-          height: 50.h,
-          fit: BoxFit.fitWidth,
-        ),
-        Image.asset(
-          'assets/images/logotext.png',
-          height: 50.h,
-          fit: BoxFit.fitWidth,
-        )
-      ],
-    ),
-  );
+class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+  final bool showBackButton;
+  final bool showActions;
+  final VoidCallback? onBackButtonPressed;
+  final List<Widget>? actions;
+
+  const CustomAppBar({
+    Key? key,
+    required this.title,
+    this.showBackButton = true,
+    this.showActions = false,
+    this.onBackButtonPressed,
+    this.actions,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      centerTitle: true,
+      leading: showBackButton
+          ? IconButton(
+        icon: Icon(Icons.arrow_back_ios),
+        onPressed: onBackButtonPressed ?? () {
+          Navigator.pop(context);
+        },
+      )
+          : null,
+      title: Text(title , style: TextStyle(
+        fontWeight: FontWeight.w700
+      ),),
+      actions: showActions
+          ? actions ??
+          [
+            TextButton(
+              onPressed: () {
+                // Handle language change action
+              },
+              child: Text(
+                'English',
+                style: TextStyle(color: Colors.red),
+              ),
+            ),
+          ]
+          : null,
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(kToolbarHeight);
 }

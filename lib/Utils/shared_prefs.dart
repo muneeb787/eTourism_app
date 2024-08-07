@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:etourism_app/Models/user.model.dart';
+import 'package:etourism_app/models/user.model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

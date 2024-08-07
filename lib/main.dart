@@ -1,14 +1,15 @@
-
 import 'package:etourism_app/Screens/splash.screen.dart';
 import 'package:etourism_app/provider/auth.provider.dart';
+import 'package:etourism_app/provider/customBottomNavBar.provider.dart';
 import 'package:etourism_app/provider/welcome.provider.dart';
-import 'package:etourism_app/screens/authentication.screen.dart';
-import 'package:etourism_app/screens/select_auth.screen.dart';
+import 'package:etourism_app/screens/home_page.screen.dart';
+import 'package:etourism_app/screens/login.screen.dart';
+import 'package:etourism_app/screens/main_activity.screen.dart';
+import 'package:etourism_app/screens/signup.screen.dart';
 import 'package:etourism_app/screens/welcome.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
 
 void main() {
   runApp(const ETourismApp());
@@ -24,25 +25,50 @@ class ETourismApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthProvider()),
         ChangeNotifierProvider(create: (context) => WelcomeProvider()),
+        ChangeNotifierProvider(create: (context) => BottomNavBarProvider()),
       ],
       child: ScreenUtilInit(
         child: MaterialApp(
           title: 'E-Tourism',
           debugShowCheckedModeBanner: false,
           theme: ThemeData(
-            primaryColor: const Color.fromRGBO(28, 33, 41, 1.0),
+            primaryColor: const Color.fromRGBO(247, 93, 55, 1.0),
             colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.blueGrey)
-                .copyWith(secondary: const Color.fromRGBO(55, 184, 252, 1.0)),
+                .copyWith(secondary: const Color.fromRGBO(253, 253, 253, 1.0)),
             textTheme: const TextTheme(
               bodySmall: TextStyle(
-                  fontSize: 15, fontWeight: FontWeight.w900, color: Colors.white),
+                fontFamily: 'Poppins',
+                fontSize: 15,
+                fontWeight: FontWeight.w900,
+                color: Colors.black,
+              ),
               bodyMedium: TextStyle(
-                  fontSize: 32, fontWeight: FontWeight.w900, color: Colors.white),
+                fontFamily: 'Poppins',
+                fontSize: 32,
+                fontWeight: FontWeight.w900,
+                color: Colors.black,
+              ),
               bodyLarge: TextStyle(
-                  fontSize: 32, fontWeight: FontWeight.normal, color: Colors.white),
-              displaySmall: TextStyle(fontSize: 8, color: Colors.white),
-              displayMedium: TextStyle(fontSize: 14, color: Colors.white),
-              displayLarge: TextStyle(fontSize: 18, color: Colors.white),
+                fontFamily: 'Poppins',
+                fontSize: 32,
+                fontWeight: FontWeight.normal,
+                color: Colors.black,
+              ),
+              displaySmall: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 8,
+                color: Colors.black,
+              ),
+              displayMedium: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 14,
+                color: Colors.black,
+              ),
+              displayLarge: TextStyle(
+                fontFamily: 'Poppins',
+                fontSize: 18,
+                color: Colors.black,
+              ),
             ),
           ),
           // home: const SplashScreen(),
@@ -51,9 +77,10 @@ class ETourismApp extends StatelessWidget {
             // When navigating to the "/" route, build the FirstScreen widget.
             '/': (context) => const SplashScreen(),
             WelcomeScreen.pageName: (context) => const WelcomeScreen(),
-            SelectAuthentication.pageName: (context) => const SelectAuthentication(),
-
-            AuthenticationScreen.pageName: (context) => const AuthenticationScreen(),
+            LoginScreen.pageName: (context) => LoginScreen(),
+            SignupScreen.pageName: (context) => SignupScreen(),
+            HomePage.pageName: (context) => HomePage(),
+            MainActivity.pageName: (context) => MainActivity(),
           },
         ),
       ),
