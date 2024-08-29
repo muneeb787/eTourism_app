@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:etourism_app/Utils/customColors.dart';
+import 'package:etourism_app/provider/auth.provider.dart';
 import 'package:etourism_app/provider/customBottomNavBar.provider.dart';
 import 'package:etourism_app/screens/home_page.screen.dart';
+import 'package:etourism_app/screens/settings.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -73,7 +75,7 @@ class _MainActivityState extends State<MainActivity> {
       HomePage(),
       const Placeholder(), // Replace with actual pages
       const Placeholder(),
-      const Placeholder(),
+      SettingsScreen()
     ];
 
     return WillPopScope(
@@ -107,7 +109,7 @@ class _MainActivityState extends State<MainActivity> {
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.chat),
+                icon: Icon(Icons.settings),
                 label: '',
               ),
             ],

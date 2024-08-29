@@ -23,6 +23,16 @@ class User {
     );
   }
 
+  factory User.fromJson2(Map<String, dynamic> json) {
+    return User(
+      id: json['id'] ?? "",
+      username: json['username'] ?? "",
+      name: json['Name'] ?? "",
+      email: json['email'] ?? "",
+      imageUrl: json['imageUrl'] ?? "",
+    );
+  }
+
   Map<String, dynamic> toJson() {
     return {
       'id': id,

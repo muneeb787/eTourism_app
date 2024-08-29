@@ -11,13 +11,24 @@ class SharedPrefs {
     prefs.setString('user', jsonEncode(user.toJson()));
   }
 
+  Future<bool> removeUserFromSharedPreferences() async {
+    try {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      return await prefs.remove('user');
+    } catch (e) {
+      print('Error removing user: $e');
+      return false;
+    }
+  }
+
   Future<User?> getUserFromSharedPreferences() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? userData = prefs.getString('user');
     print("sadasd  $userData");
     if (userData != null) {
       Map<String, dynamic> userMap = jsonDecode(userData);
-      return User.fromJson(userMap);
+      print("sadasd------ , ${userMap}");
+      return User.fromJson2(userMap);
     }
 
     return null;

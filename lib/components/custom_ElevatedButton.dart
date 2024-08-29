@@ -4,6 +4,7 @@ class CustomElevatedButton extends StatelessWidget {
   final Function()? onPressed;
   final String? text;
   final double? width;
+  final double? height; // New property for custom height
   final Color? backgroundColor;
   final Color? textColor;
   final Color? borderColor; // New property for custom border color
@@ -17,6 +18,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.onPressed,
     this.text,
     this.width,
+    this.height,
     this.backgroundColor,
     this.textColor,
     this.borderColor,
@@ -32,7 +34,7 @@ class CustomElevatedButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         elevation: 0,
-        fixedSize: Size(width ?? 330, 55),
+        fixedSize: Size(width ?? 330, height ?? 55), // Use the new height parameter with a default value
         backgroundColor: backgroundColor ?? Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18.0),

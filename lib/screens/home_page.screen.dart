@@ -2,10 +2,18 @@ import 'dart:ui';
 
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:etourism_app/components/customDrawer.dart';
+import 'package:etourism_app/components/placeItem.dart';
+import 'package:etourism_app/models/hotel.model.dart';
+import 'package:etourism_app/provider/hotels.provider.dart';
+import 'package:etourism_app/provider/places.provider.dart';
+import 'package:etourism_app/screens/hotelView.screen.dart';
+import 'package:etourism_app/screens/placesByCategory.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:geocoding/geocoding.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   static const pageName = '/homePage';
@@ -15,6 +23,14 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<PlacesProvider>(context, listen: false).fetchPlaces();
+    Provider.of<HotelProvider>(context, listen: false).fetchHotels();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,118 +184,225 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             SizedBox(
-              height: 70,
+              height: 30,
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Text(
-                'Categories',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: SizedBox(
-                height: 100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            Expanded(
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    CategoryItem(
-                        svgAsset: 'assets/icons/mountain.svg',
-                        label: 'Mountains'),
-                    CategoryItem(
-                        svgAsset: 'assets/icons/beach.svg', label: 'Beach'),
-                    CategoryItem(
-                        svgAsset: 'assets/icons/lake.svg', label: 'Lakes'),
-                    CategoryItem(
-                        svgAsset: 'assets/icons/camp.svg', label: 'Camp'),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        'Categories',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: SizedBox(
+                        height: 100,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            CategoryItem(
+                                svgAsset: 'assets/icons/mountain.svg',
+                                label: 'Mountains'),
+                            CategoryItem(
+                                svgAsset: 'assets/icons/beach.svg',
+                                label: 'Beach'),
+                            CategoryItem(
+                                svgAsset: 'assets/icons/lake.svg',
+                                label: 'Lakes'),
+                            CategoryItem(
+                                svgAsset: 'assets/icons/camp.svg',
+                                label: 'Camp'),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Most Visited',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text('See All'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Consumer<PlacesProvider>(
+                      builder: (context, data, child) {
+                        if (data.isLoading) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return Container(
+                            height: 150,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: data.places.length,
+                              itemBuilder: (context, index) {
+                                final item = data.places[index];
+                                return PlaceItem(
+                                  id: item.id,
+                                  image: item.image,
+                                  name: item.name,
+                                  location: item.location,
+                                  rating: item.rating?.toDouble() ?? 0,
+                                );
+                              },
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Services',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600),
+                          ),
+                          TextButton(
+                            onPressed: () {},
+                            child: Text('See All'),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        ServiceItem(
+                            svgAsset: 'assets/icons/hotel.svg',
+                            label: 'Hotel',
+                            isSelected: true),
+                        ServiceItem(
+                            svgAsset: 'assets/icons/bus.svg',
+                            label: 'Bus',
+                            isSelected: false),
+                      ],
+                    ),
+                    Consumer<HotelProvider>(
+                      builder: (context, data, child) {
+                        if (data.isLoading) {
+                          return Center(child: CircularProgressIndicator());
+                        } else {
+                          return GridView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.all(8),
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2, // Number of columns
+                              childAspectRatio: 3 /
+                                  2, // Width / height ratio of each grid item
+                              crossAxisSpacing:
+                                  10, // Horizontal space between items
+                              mainAxisSpacing:
+                                  10, // Vertical space between items
+                            ),
+                            itemCount: data.hotels.length,
+                            itemBuilder: (context, index) {
+                              final item = data.hotels[index];
+                              print("❤️❤️ Hotel Item: ${item}");
+                              return HotelGridItem(hotel: item);
+                            },
+                          );
+                        }
+                      },
+                    ),
                   ],
+                ),
+              ),
+            )
+          ],
+        );
+      }),
+    );
+  }
+}
+
+class HotelGridItem extends StatelessWidget {
+  final HotelModel hotel;
+
+  HotelGridItem({required this.hotel});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HotelViewScreen(hotelId: hotel.id ?? ""),
+          ),
+        )
+      },
+      child: Card(
+        elevation: 2,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
+                child: Image.network(
+                  hotel.logoUrl,
+                  fit: BoxFit.cover,
+                  width: double.infinity,
                 ),
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              padding: EdgeInsets.all(8),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Most Visited',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    hotel.name,
+                    style: TextStyle(
+                        fontSize: 13,
+                        fontWeight: FontWeight.w500,
+                        color: CustomColors.darkGray),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text('See All'),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: 150,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  PlaceItem(
-                    image:
-                        'https://cdn.thecollector.com/wp-content/uploads/2023/11/tallest-mountains-in-the-world.jpg',
-                    name: 'Kanchenjungha',
-                    location: 'Rangpur, Bangladesh',
-                    rating: 4.7,
-                  ),
-                  PlaceItem(
-                    image:
-                        'https://skift.com/wp-content/uploads/2023/04/zany-jadraque-ZCRtfop2hZY-unsplash.jpg',
-                    name: 'Cox\'s Bazar Sea Beach',
-                    location: 'Cox\'s Bazar, Bangladesh',
-                    rating: 4.5,
-                  ),
-                  PlaceItem(
-                    image:
-                        'https://www.gns.cri.nz/assets/Uploads/Heroes/lake-hero-2-v2__FillWzEyMDAsNjAwXQ.jpg',
-                    name: 'Fewa Lake',
-                    location: 'Pokhara, Nepal',
-                    rating: 4.6,
-                  ),
-                  PlaceItem(
-                    image:
-                        'https://www.easycamp.com/Admin/Public/GetImage.ashx?Image=/Files/Images/EasyCamp/Join+the+Fun/2022/Festivals+Article+850x500.jpg&Width=1260&Compression=80&Crop=5',
-                    name: 'Camping Site',
-                    location: 'Bandarban, Bangladesh',
-                    rating: 4.3,
+                  SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Icon(Icons.star, size: 16, color: Colors.amber),
+                      SizedBox(width: 4),
+                      Text(
+                        hotel.rating.toString(),
+                        style: TextStyle(
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
+                            color: CustomColors.darkGray),
+                      ),
+                    ],
                   ),
                 ],
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Services',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                  ),
-                  TextButton(
-                    onPressed: () {},
-                    child: Text('See All'),
-                  ),
-                ],
-              ),
-            ),
-            Row(
-              children: [
-                ServiceItem(
-                    svgAsset: 'assets/icons/hotel.svg',
-                    label: 'Hotel',
-                    isSelected: true),
-                ServiceItem(
-                    svgAsset: 'assets/icons/bus.svg',
-                    label: 'Bus',
-                    isSelected: false),
-              ],
             ),
           ],
-        );
-      }),
+        ),
+      ),
     );
   }
 }
@@ -292,117 +415,49 @@ class CategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      height: 80,
-      margin: EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15.0),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromRGBO(0, 0, 0, 0.1),
-            offset: Offset(0, 2),
-            blurRadius: 10.0,
+    return GestureDetector(
+      onTap: () => {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PlacesByCategory(category: label),
           ),
-        ],
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          SvgPicture.asset(
-            svgAsset,
-            width: 30,
-            height: 30,
-            color: CustomColors.primaryColor,
-          ),
-          SizedBox(height: 8.0),
-          Text(
-            label,
-            style: TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.w500,
-                color: CustomColors.darkGray),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class PlaceItem extends StatelessWidget {
-  final String image;
-  final String name;
-  final String location;
-  final double rating;
-
-  PlaceItem({
-    required this.image,
-    required this.name,
-    required this.location,
-    required this.rating,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      height: 200,
-      width: 200,
-      child: Stack(
-        fit: StackFit.passthrough,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(22.0),
-            child: Image.network(
-              image,
-              fit: BoxFit.cover,
+        )
+      },
+      child: Container(
+        width: 80,
+        height: 80,
+        margin: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15.0),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.1),
+              offset: Offset(0, 2),
+              blurRadius: 10.0,
             ),
-          ),
-          Positioned(
-            top: 10,
-            left: 10,
-            child: Row(
-              children: [
-                Icon(Icons.star, color: Colors.yellow, size: 14),
-                SizedBox(width: 4),
-                Text(
-                  rating.toString(),
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ],
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              svgAsset,
+              width: 30,
+              height: 30,
+              color: CustomColors.primaryColor,
             ),
-          ),
-          Positioned(
-            bottom: 10,
-            left: 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                    color: CustomColors.secondaryColor,
-                  ),
-                ),
-                Text(
-                  location,
-                  style: TextStyle(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w500,
-                    color: CustomColors.secondaryColor,
-                  ),
-                ),
-              ],
+            SizedBox(height: 8.0),
+            Text(
+              label,
+              style: TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w500,
+                  color: CustomColors.darkGray),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
