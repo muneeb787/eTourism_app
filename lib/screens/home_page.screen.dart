@@ -2,12 +2,15 @@ import 'dart:ui';
 
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:etourism_app/components/customDrawer.dart';
+import 'package:etourism_app/components/customNavigator.dart';
 import 'package:etourism_app/components/placeItem.dart';
 import 'package:etourism_app/models/hotel.model.dart';
+import 'package:etourism_app/provider/auth.provider.dart';
 import 'package:etourism_app/provider/hotels.provider.dart';
 import 'package:etourism_app/provider/places.provider.dart';
 import 'package:etourism_app/screens/hotelView.screen.dart';
 import 'package:etourism_app/screens/placesByCategory.screen.dart';
+import 'package:etourism_app/screens/update_profile.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -111,13 +114,35 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                             ),
-                            Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(15),
-                                color: Colors.white.withOpacity(0.9),
-                              ),
-                              padding: EdgeInsets.all(3),
-                              child: FaIcon(FontAwesomeIcons.user),
+                            Consumer<AuthProvider>(
+                              builder: (context, value, child) {
+                                var image = value.userData.imageUrl;
+                                return Container(
+                                  width: 30,
+                                  height: 30,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(
+                                        20), // Ensure a full circle
+                                    color: Colors.white.withOpacity(0.9),
+                                  ),
+                                  child: image != null
+                                      ? GestureDetector(
+                                          onTap: () {
+                                            NavigateWithSlideAnimation(context, UpdateProfileScreen());
+                                          },
+                                          child: ClipOval(
+                                            child: Image.network(
+                                              image,
+                                              width: 40,
+                                              height: 40,
+                                              fit: BoxFit
+                                                  .cover, // Ensures the image fits within the circle
+                                            ),
+                                          ),
+                                        )
+                                      : Icon(FontAwesomeIcons.faceSmile),
+                                );
+                              },
                             ),
                           ],
                         ),

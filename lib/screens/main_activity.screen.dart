@@ -10,6 +10,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
+import 'hotelsList.screen.dart';
+
 class MainActivity extends StatefulWidget {
   const MainActivity({Key? key}) : super(key: key);
   static const pageName = '/main-activity';
@@ -73,7 +75,7 @@ class _MainActivityState extends State<MainActivity> {
 
     final List<Widget> pages = [
       HomePage(),
-      const Placeholder(), // Replace with actual pages
+      HotelsListScreen(), // Replace with actual pages
       const Placeholder(),
       SettingsScreen()
     ];
@@ -101,7 +103,7 @@ class _MainActivityState extends State<MainActivity> {
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark),
+                icon: Icon(FontAwesomeIcons.hotel),
                 label: '',
               ),
               BottomNavigationBarItem(

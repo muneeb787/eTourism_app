@@ -26,18 +26,22 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       centerTitle: true,
       backgroundColor: backgroundColor,
+      automaticallyImplyLeading: false, // Add this line
       leading: showBackButton
           ? IconButton(
-        icon: Icon(Icons.arrow_back_ios, color: textColor,),
+        icon: Icon(Icons.arrow_back_ios, color: textColor),
         onPressed: onBackButtonPressed ?? () {
           Navigator.pop(context);
         },
       )
           : null,
-      title: Text(title , style: TextStyle(
-        fontWeight: FontWeight.w700,
-        color: textColor
-      ),),
+      title: Text(
+        title,
+        style: TextStyle(
+          fontWeight: FontWeight.w700,
+          color: textColor,
+        ),
+      ),
       actions: showActions
           ? actions ??
           [

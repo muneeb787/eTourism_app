@@ -27,7 +27,7 @@ class CustomTextField extends StatefulWidget {
     this.hintText,
     this.fillColor,
     this.validator,
-    this.borderColor = CustomColors.gray,
+    this.borderColor,
     this.readOnly,
     this.onChanged,
   }) : super(key: key);
@@ -75,31 +75,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
             readOnly: widget.readOnly ?? false,
             onChanged: widget.onChanged,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 18.0, horizontal: 12.0), // Adjust the height
+              contentPadding: EdgeInsets.symmetric(vertical: 17.0, horizontal: 12.0), // Adjust the height
               hintText: widget.hintText,
-              fillColor: widget.fillColor ?? Colors.white,
+              fillColor: (widget.fillColor ?? CustomColors.gray).withOpacity(0.4),
               filled: true,
               errorStyle: TextStyle(fontSize: 15, fontWeight: FontWeight.normal),
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(18.0),
-                borderSide: BorderSide(
-                  color: widget.borderColor ?? Colors.black,
-                  width: 1.5, // Increase border width
-                ),
+                borderSide: BorderSide.none,
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(18.0),
-                borderSide: BorderSide(
-                  color: widget.borderColor ?? Colors.black,
-                  width: 1.5, // Increase border width
-                ),
+                borderSide: BorderSide.none,
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(18.0),
-                borderSide: BorderSide(
-                  color: widget.borderColor ?? Colors.black,
-                  width: 1.5, // Increase border width
-                ),
+                borderSide: BorderSide.none,
               ),
               suffixIcon: widget.obscureText
                   ? IconButton(
