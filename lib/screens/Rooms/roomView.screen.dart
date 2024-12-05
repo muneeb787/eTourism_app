@@ -1,7 +1,7 @@
 import 'package:etourism_app/Components/custom_ElevatedButton.dart';
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:etourism_app/models/room.model.dart';
-import 'package:etourism_app/screens/room_booking.screen.dart';
+import 'package:etourism_app/screens/Rooms/room_booking.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 

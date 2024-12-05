@@ -3,7 +3,7 @@ import 'package:etourism_app/Utils/shared_prefs.dart';
 import 'package:etourism_app/Utils/toast.dart';
 import 'package:etourism_app/models/user.model.dart';
 import 'package:etourism_app/provider/customBottomNavBar.provider.dart';
-import 'package:etourism_app/screens/login.screen.dart';
+import 'package:etourism_app/screens/Auth/login.screen.dart';
 import 'package:etourism_app/screens/main_activity.screen.dart';
 import 'package:etourism_app/screens/welcome.screen.dart';
 import 'package:flutter/material.dart';

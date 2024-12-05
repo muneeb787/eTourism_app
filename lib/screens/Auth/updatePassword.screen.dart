@@ -4,8 +4,8 @@ import 'package:etourism_app/components/custom_Appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/custom_text_field.dart';
-import '../provider/auth.provider.dart';
+import '../../components/custom_text_field.dart';
+import '../../provider/auth.provider.dart';
 
 class UpdatePasswordScreen extends StatefulWidget {
   const UpdatePasswordScreen({Key? key}) : super(key: key);

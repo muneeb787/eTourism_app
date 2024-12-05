@@ -2,6 +2,9 @@ import 'package:geocoding/geocoding.dart';
 
 Future<Map<String, String>> getLocationDetailsFromLatLng(double latitude, double longitude) async {
   try {
+
+    print("latitide: ${latitude}");
+    print("longitude: ${longitude}");
     List<Placemark> placemarks = await placemarkFromCoordinates(latitude, longitude);
 
     if (placemarks.isNotEmpty) {

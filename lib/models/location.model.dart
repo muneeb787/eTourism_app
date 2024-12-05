@@ -23,8 +23,8 @@ class LocationModel {
       city: json['city'] as String,
       state: json['state'] as String,
       country: json['country'] as String,
-      latitude: json['coordinates'][1].toDouble() ?? 0,
-      longitude: json['coordinates'][0].toDouble() ?? 0,
+      latitude: json['coordinates'][0].toDouble() ?? 0,
+      longitude: json['coordinates'][1].toDouble() ?? 0,
     );
   }
 

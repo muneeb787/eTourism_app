@@ -1,9 +1,10 @@
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:etourism_app/Utils/getLocation.dart';
 import 'package:etourism_app/models/location.model.dart';
-import 'package:etourism_app/screens/PlacesOnMap.screen.dart';
+import 'package:etourism_app/screens/Places/PlacesOnMap.screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:geocoding/geocoding.dart';
 
 class PlaceItem extends StatefulWidget {
@@ -92,14 +93,14 @@ class _PlaceItemState extends State<PlaceItem> {
         );
       },
       child: Container(
-        margin: EdgeInsets.all(10),
-        height: 200,
-        width: 200,
+        margin: EdgeInsets.all(5),
+        height: 200.h,
+        width: 200.w,
         child: Stack(
           fit: StackFit.passthrough,
           children: [
             ClipRRect(
-              borderRadius: BorderRadius.circular(15.0),
+              borderRadius: BorderRadius.circular(5.0),
               child: Image.network(
                 widget.image,
                 fit: BoxFit.cover,

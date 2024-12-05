@@ -2,7 +2,7 @@ import 'package:etourism_app/Components/custom_ElevatedButton.dart';
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:etourism_app/components/custom_Appbar.dart';
 import 'package:etourism_app/provider/hotels.provider.dart';
-import 'package:etourism_app/screens/roomView.screen.dart';
+import 'package:etourism_app/screens/Rooms/roomView.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

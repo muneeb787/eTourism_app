@@ -1,5 +1,5 @@
-import 'package:etourism_app/screens/privacyPolicy.screen.dart';
-import 'package:etourism_app/screens/termsAndCondition.screen.dart';
+import 'package:etourism_app/screens/Settings/privacyPolicy.screen.dart';
+import 'package:etourism_app/screens/Settings/termsAndCondition.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

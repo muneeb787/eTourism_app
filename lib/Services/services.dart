@@ -315,6 +315,45 @@ class Services {
     }
   }
 
+  Future<Map<String, dynamic>> generateAiPlan({
+    required Map<String, dynamic> planDetails,
+    required Function(Map<String, dynamic> plan) onSuccess,
+    required Function(String e) onError
+  }) async {
+    final String token = await SharedPrefs.instance.getToken() ?? "";
+    try {
+      var response = await http.post(
+        Uri.parse(_baseUrl + "/tour/suggestions"), // Update this endpoint to match your API
+        headers: {
+          'Authorization': "Bearer $token",
+          'Content-Type': 'application/json',
+        },
+        body: json.encode(planDetails),
+      );
+
+      print(response.statusCode);
+      if (response.statusCode == 200) { // Assuming 200 is the success status code for this endpoint
+        final data = json.decode(response.body);
+        print("data ${data}");
+        if (data is Map<String, dynamic>) {
+          onSuccess(data); // Call onSuccess callback with the entire plan
+          return data;
+        } else {
+          throw Exception('Unexpected response format');
+        }
+      } else {
+        dynamic responseData = json.decode(response.body);
+        String errorMessage = responseData['message'] ?? 'Failed to generate AI plan';
+        onError(errorMessage);
+        throw Exception(errorMessage);
+      }
+    } catch (e) {
+      print("An error occurred: $e");
+      onError("An error occurred: $e");
+      throw Exception('Failed to generate AI plan');
+    }
+  }
+
   Future<void> updateUserImage({
     required String imageUrl,
     required Function(User user, String message) onSuccess,

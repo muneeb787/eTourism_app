@@ -1,11 +1,11 @@
 import 'package:etourism_app/components/custom_Appbar.dart';
 import 'package:etourism_app/models/location.model.dart';
 import 'package:etourism_app/provider/hotels.provider.dart';
-import 'package:etourism_app/screens/hotelView.screen.dart';
+import 'package:etourism_app/screens/Hotels/hotelView.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
-import '../models/hotel.model.dart';
+import '../../models/hotel.model.dart';
 // import 'hotel_details_page.dart'; // Assuming this is your hotel details page
 
 class PlacesOnMap extends StatefulWidget {

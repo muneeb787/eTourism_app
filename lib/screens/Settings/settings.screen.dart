@@ -1,14 +1,15 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:etourism_app/components/custom_Appbar.dart';
 import 'package:etourism_app/components/custom_listtile.dart';
 import 'package:etourism_app/provider/auth.provider.dart';
-import 'package:etourism_app/screens/privacyPolicy.screen.dart';
-import 'package:etourism_app/screens/termsAndCondition.screen.dart';
-import 'package:etourism_app/screens/updatePassword.screen.dart';
-import 'package:etourism_app/screens/update_profile.screen.dart';
+import 'package:etourism_app/screens/Settings/privacyPolicy.screen.dart';
+import 'package:etourism_app/screens/Settings/termsAndCondition.screen.dart';
+import 'package:etourism_app/screens/Auth/updatePassword.screen.dart';
+import 'package:etourism_app/screens/Settings/update_profile.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../components/customNavigator.dart';
+import '../../components/customNavigator.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -59,17 +60,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
     final User = Provider.of<AuthProvider>(context, listen: false).userData;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('My Profile'),
-        centerTitle: true,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+      appBar: CustomAppBar(
+        showBackButton: false,
+        title: 'My Profile',
+        textColor: Colors.black,
         backgroundColor: Colors.white,
-        elevation: 0,
       ),
       body: Padding(
         padding: EdgeInsets.all(16.0),

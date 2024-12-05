@@ -1,4 +1,5 @@
 import 'package:etourism_app/Screens/splash.screen.dart';
+import 'package:etourism_app/provider/aiPlanner.provider.dart';
 import 'package:etourism_app/provider/auth.provider.dart';
 import 'package:etourism_app/provider/booking.provider.dart';
 import 'package:etourism_app/provider/customBottomNavBar.provider.dart';
@@ -6,9 +7,9 @@ import 'package:etourism_app/provider/hotels.provider.dart';
 import 'package:etourism_app/provider/places.provider.dart';
 import 'package:etourism_app/provider/welcome.provider.dart';
 import 'package:etourism_app/screens/home_page.screen.dart';
-import 'package:etourism_app/screens/login.screen.dart';
+import 'package:etourism_app/screens/Auth/login.screen.dart';
 import 'package:etourism_app/screens/main_activity.screen.dart';
-import 'package:etourism_app/screens/signup.screen.dart';
+import 'package:etourism_app/screens/Auth/signup.screen.dart';
 import 'package:etourism_app/screens/welcome.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -33,6 +34,7 @@ class ETourismApp extends StatelessWidget {
         ChangeNotifierProvider(create: (context) => PlacesProvider()),
         ChangeNotifierProvider(create: (context) => HotelProvider()),
         ChangeNotifierProvider(create: (context) => BookingProvider()),
+        ChangeNotifierProvider(create: (context) => AiPlannerProvider()),
       ],
       child: ScreenUtilInit(
         child: GlobalLoaderOverlay(

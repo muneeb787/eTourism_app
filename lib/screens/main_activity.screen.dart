@@ -3,14 +3,15 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:etourism_app/provider/auth.provider.dart';
 import 'package:etourism_app/provider/customBottomNavBar.provider.dart';
+import 'package:etourism_app/screens/aiPlanner/aiPlanner.screen.dart';
 import 'package:etourism_app/screens/home_page.screen.dart';
-import 'package:etourism_app/screens/settings.screen.dart';
+import 'package:etourism_app/screens/Settings/settings.screen.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:provider/provider.dart';
 
-import 'hotelsList.screen.dart';
+import 'Hotels/hotelsList.screen.dart';
 
 class MainActivity extends StatefulWidget {
   const MainActivity({Key? key}) : super(key: key);
@@ -76,7 +77,7 @@ class _MainActivityState extends State<MainActivity> {
     final List<Widget> pages = [
       HomePage(),
       HotelsListScreen(), // Replace with actual pages
-      const Placeholder(),
+      AiPlannerScreen(),
       SettingsScreen()
     ];
 
@@ -107,7 +108,7 @@ class _MainActivityState extends State<MainActivity> {
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.notifications),
+                icon: Icon(FontAwesomeIcons.wandMagicSparkles),
                 label: '',
               ),
               BottomNavigationBarItem(

@@ -1,6 +1,8 @@
 import 'package:etourism_app/models/location.model.dart';
 import 'package:etourism_app/models/room.model.dart';
 
+import 'weather.model.dart';
+
 class HotelModel {
   String? id;
   String managerId;
@@ -13,6 +15,7 @@ class HotelModel {
   bool isActive;
   bool isVerified;
   List<RoomModel>? rooms;
+  WeatherModel? weather;
 
   HotelModel({
     this.id,
@@ -26,6 +29,7 @@ class HotelModel {
     this.isActive = true,
     this.isVerified = true,
     this.rooms,
+    this.weather,
   });
 
   // From JSON
@@ -45,6 +49,7 @@ class HotelModel {
       rooms: json['rooms'] != null && (json['rooms'] as List).isNotEmpty
           ? List<RoomModel>.from(json['rooms'].map((room) => RoomModel.fromJson(room)))
           : [], // Handle case where rooms may be an empty array or not present
+      weather: json['weather'] != null ? WeatherModel.fromJson(json['weather'] as Map<String, dynamic>) : null,
     );
   }
 
@@ -62,6 +67,7 @@ class HotelModel {
       'isActive': isActive,
       'isVerified': isVerified,
       'rooms': rooms?.map((room) => room.toJson()).toList(), // Convert rooms to JSON if they exist, even if empty
+      'weather': weather?.toJson(),
     };
   }
 }

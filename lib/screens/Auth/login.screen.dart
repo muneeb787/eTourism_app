@@ -1,7 +1,7 @@
 import 'package:etourism_app/Components/custom_ElevatedButton.dart';
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:etourism_app/provider/auth.provider.dart';
-import 'package:etourism_app/screens/signup.screen.dart';
+import 'package:etourism_app/screens/Auth/signup.screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

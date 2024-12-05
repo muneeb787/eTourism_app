@@ -2,7 +2,7 @@ import 'package:etourism_app/Components/custom_ElevatedButton.dart';
 import 'package:etourism_app/Utils/customColors.dart';
 import 'package:etourism_app/provider/auth.provider.dart';
 import 'package:etourism_app/screens/home_page.screen.dart';
-import 'package:etourism_app/screens/login.screen.dart';
+import 'package:etourism_app/screens/Auth/login.screen.dart';
 import 'package:etourism_app/screens/main_activity.screen.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -125,7 +125,7 @@ class SignupScreen extends StatelessWidget {
                           ),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
-                              Navigator.pushReplacementNamed(context, MainActivity.pageName);
+                              Navigator.pushReplacementNamed(context, LoginScreen.pageName);
                             },
                         ),
                       ],
